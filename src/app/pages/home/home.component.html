@@ -1,0 +1,9 @@
+<section id="home">
+  <p>Reservations:</p>
+  <ul *ngIf="(reservations$ | async ) as reservations">
+    <li *ngFor="let reservation of reservations">
+      {{ reservation.time.toLocaleString() }} - <span [ngClass]="reservation.who === 'Free' ? 'text-green-500' : ''">{{ reservation.who === 'Free' ? reservation.who + '!!' : reservation.who }}</span>&nbsp;<input *ngIf="reservation.who === 'Free'" class="border" type="text" [value]="reservation.who === 'Free' ? '' : reservation.who" #who (keyup.enter)="onReservation(reservation.id, who.value)" />
+    </li>
+  </ul>
+  <p *ngIf="(reservationsError$ | async ) as error" class="text-white bg-red-500">{{ error }}</p>
+</section>
